@@ -1,3 +1,5 @@
+[ $ZELLIJ != 0 ] && zellij && exit
+
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 if [ -d $HOME/games ]; then
@@ -43,8 +45,6 @@ alias ls="lsd -1 -l --icon never --date relative"
 alias cd="z"
 alias sudo="doas"
 alias edit=$EDITOR
-
-[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
 
 eval "$(zoxide init zsh)"
 

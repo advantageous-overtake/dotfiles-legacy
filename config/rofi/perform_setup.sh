@@ -8,8 +8,8 @@ local_share="$HOME/.local/share"
 rofi_config="${usr_config}/rofi"
 rofi_share="${local_share}/rofi"
 
-[ $( readlink $rofi_config ) = $current_directory ] && return
-[ $( readlink $rofi_share ) = $current_directory ] && return
+[ $( readlink $rofi_config | wc -l ) != 0 ] && [ $( readlink $rofi_config ) = $current_directory ] && return
+[ $( readlink $rofi_config | wc -l ) != 0 ] && [ $( readlink $rofi_share ) = $current_directory ] && return
 
 # if a rofi and rofi-old files already exist, add a random suffix to rofi-old
 [ -d $rofi_config ] && [ -d "${rofi_config}-old" ] && mv "${rofi_config}-old" "${rofi_config}-$( openssl rand -base64 3 )"
