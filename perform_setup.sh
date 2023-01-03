@@ -1,6 +1,6 @@
 #!/bin/sh
 
-[ $UID != 0 ] && echo "for agetty setup, run as superuser."
+[ $UID != 0 ] && echo "[i] for agetty setup, run as superuser."
 
 current_directory=$( dirname "$( pwd -L )/${0}" )
 
