@@ -12,8 +12,8 @@ rofi_share="${local_share}/rofi"
 [ $( readlink $rofi_config | wc -l ) != 0 ] && [ $( readlink $rofi_share ) = $current_directory ] && return
 
 # if a rofi and rofi-old files already exist, add a random suffix to rofi-old
-[ -d $rofi_config ] && [ -d "${rofi_config}-old" ] && mv "${rofi_config}-old" "${rofi_config}-$( openssl rand -base64 3 )"
-[ -d $rofi_share ] && [ -d "${rofi_share}-old" ] && mv "${rofi_share}-old" "${rofi_share}-$( openssl rand -base64 3 )"
+[ -d $rofi_config ] && [ -d "${rofi_config}-old" ] && mv "${rofi_config}-old" "${rofi_config}-$( openssl rand -hex )"
+[ -d $rofi_share ] && [ -d "${rofi_share}-old" ] && mv "${rofi_share}-old" "${rofi_share}-$( openssl rand -hex 4 )"
 
 # if the config folder already exists, make a backup
 [ -d $rofi_config ] && mv $rofi_config "${rofi_config}-old"
