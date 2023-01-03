@@ -9,14 +9,14 @@
 #     mod + shift + r - Restart i3wm
 #   Container Management
 #     floating_modifier - Your modifier key
-#     mod + z | left - Focus left
-#     mod + c | down - Focus down
-#     mod + x | up - Focus up
-#     mod + v | right - Focus right
-#     mod + shift + z | left - Move left
-#     mod + shift + c | down - Move down
-#     mod + shift + x | up - Move up
-#     mod + shift + v | right - Move right
+#     mod + h | left - Focus left
+#     mod + j | down - Focus down
+#     mod + k | up - Focus up
+#     mod + l | right - Focus right
+#     mod + shift + h | left - Move left
+#     mod + shift + j | down - Move down
+#     mod + shift + k | up - Move up
+#     mod + shift + l | right - Move right
 #     mod + shift + a - Kill the currently focused container
 #     mod + f - Enter fullscreen mode for the currently focused container
 #     Mode "resize"
@@ -147,20 +147,20 @@ bindsym $primary_modifier+Shift+r restart
 # Container Keybinds
 floating_modifier $primary_modifier
 
-bindsym $primary_modifier+z focus left
-bindsym $primary_modifier+x focus up
-bindsym $primary_modifier+c focus down
-bindsym $primary_modifier+v focus right
+bindsym $primary_modifier+h focus left
+bindsym $primary_modifier+j focus down
+bindsym $primary_modifier+k focus up
+bindsym $primary_modifier+l focus right
 
 bindsym $primary_modifier+Left focus left
 bindsym $primary_modifier+Up focus up
 bindsym $primary_modifier+Down focus down
 bindsym $primary_modifier+Right focus right
 
-bindsym $primary_modifier+Shift+z move left
-bindsym $primary_modifier+Shift+x move up
-bindsym $primary_modifier+Shift+c move down
-bindsym $primary_modifier+Shift+v move right
+bindsym $primary_modifier+Shift+h move left
+bindsym $primary_modifier+Shift+j move down
+bindsym $primary_modifier+Shift+k move up
+bindsym $primary_modifier+Shift+l move right
 
 bindsym $primary_modifier+Shift+Left move left
 bindsym $primary_modifier+Shift+Up move up
