@@ -2,9 +2,18 @@
 
 current_directory=$( dirname "$( pwd -L )/${0}" )
 
-[ $( readlink $HOME/.zshrc | wc -l ) = 0 ] || [ $( readlink $HOME/.zshrc ) != $current_directory/.zshrc ] && ln -S "-old" -sbfv $current_directory/.zshrc $HOME
-[ $( readlink $HOME/.zprofile | wc -l ) = 0 ] || [ $( readlink $HOME/.zprofile ) != $current_directory/.zprofile ] && ln -S "-old" -sbfv $current_directory/.zprofile $HOME
+declare -A SYMLINK_TARGETS=(
+  [zshrc]=$HOME/.zshrc
+  [zprofile]=$HOME/.zprofile
+  [zshenv]=$HOME/.zshenv
+  [starship.toml]=$HOME/.config/starship.toml
+)
 
-mkdir -p $HOME/.config
+for target in "${(@k)SYMLINK_TARGETS}"; do
+  link="${SYMLINK_TARGETS[${target}]}"
+  target=$current_directory/$target
+  mkdir -p $( dirname $link )
+  [ `readlink $link | wc -l` = 0 ] || [ `readlink $link` != $target ] && ln -S "-old" -sbfv $target $link
+done
 
-[ $( readlink $HOME/.config/starship.toml | wc -l ) = 0 ] || [ $( readlink $HOME/.config/starship.toml ) != $current_directory/starship.toml ] && ln -S "-old" -sbfv $current_directory/starship.toml $HOME/.config
+unset current_directory SYMLINK_TARGETS

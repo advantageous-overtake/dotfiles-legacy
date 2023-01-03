@@ -42,8 +42,8 @@
 #     If you don't know which XFree86 symbols correspond to your keyboard, you can retrieve the corresponding code via executing: "script -c 'xev' /dev/null | grep --color=never -A2 'KeyPress'"
 
 # Automatic Execution
-exec --no-startup-id "nitrogen --restore 2> /dev/null"
-exec --no-startup-id "picom --experimental-backends"
+exec --no-startup-id "nitrogen --restore"
+exec --no-startup-id "picom --config $HOME/.picom --experimental-backends"
 exec --no-startup-id "xss-lock -l slock"
 exec --no-startup-id "polkit-dumb-agent"
 exec --no-startup-id "setxkbmap es"
@@ -173,21 +173,21 @@ bindsym $primary_modifier+f fullscreen toggle
 bindsym $primary_modifier+t layout stacking
 bindsym $primary_modifier+y layout toggle split
 
-bindsym $primary_modifier+g split v
-bindsym $primary_modifier+h split h
+bindsym $primary_modifier+n split v
+bindsym $primary_modifier+m split h
 
 bindsym $primary_modifier+space floating toggle
 bindsym $primary_modifier+Shift+space focus mode_toggle
 
 # Resize Mode
 mode "resize" {
-        bindsym z resize shrink width 10 px or 10 ppt
-        bindsym x resize grow height 10 px or 10 ppt
-        bindsym c resize shrink height 10 px or 10 ppt
-        bindsym v resize grow width 10 px or 10 ppt
+        bindsym h resize shrink width 10 px or 10 ppt
+        bindsym j resize shrink height 10 px or 10 ppt
+        bindsym k resize grow height 10 px or 10 ppt
+        bindsym l resize grow width 10 px or 10 ppt
         bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Down resize shrink height 10 px or 10 ppt
+        bindsym Up resize grow height 10 px or 10 ppt
         bindsym Right resize grow width 10 px or 10 ppt
 
         bindsym Return mode "default"
@@ -197,11 +197,11 @@ mode "resize" {
 bindsym $primary_modifier+r mode "resize"
 
 # Application Keybinds
-bindsym $primary_modifier+d exec --no-startup-id "rofi -modi drun -show drun > /dev/null"
-bindsym $primary_modifier+s exec "rofi -modi ssh -show ssh > /dev/null"
+bindsym $primary_modifier+d exec --no-startup-id "rofi -config $HOME/.rofi -modi drun -show drun"
+bindsym $primary_modifier+s exec "rofi -config $HOME/.rofi -modi ssh -show ssh"
 bindsym $primary_modifier+Return exec "$terminal"
 bindsym $primary_modifier+a exec "$terminal -e 'ranger'"
-bindsym $primary_modifier+Shift+s exec --no-startup-id "~/dev/util/take_screenshot.sh"
+bindsym $primary_modifier+Shift+s exec --no-startup-id "~/util/take_screenshot.sh"
 # Bar Configuration
 
 set $disk_widget_format "{path} {percent:.01f}%"

@@ -1,0 +1,5 @@
+#!/bin/sh
+
+xrandr --dpi 84
+
+${1:-i3} -c $HOME/.i3wm && clear

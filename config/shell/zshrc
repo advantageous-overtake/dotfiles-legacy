@@ -1,15 +1,3 @@
-# [ -z $ZELLIJ ] && [ $( where zellij | wc -l ) != 0 ] && zellij && exit
-
-export PATH=$HOME/bin:/usr/local/bin:$PATH
-
-if [ -d $HOME/games ]; then
-  GAME_DIRECTORIES=$( /bin/ls $HOME/games | xargs -I{} printf ":%s/games/%s" $HOME {} )
-
-  export PATH=$PATH$GAME_DIRECTORIES # the ':' is automatically added.
-fi
-
-eval $(luarocks path)
-
 CASE_SENSITIVE="true"
 
 HYPHEN_INSENSITIVE="true"
@@ -28,10 +16,6 @@ plugins=(git)
 
 # User configuration
 
-export MANPATH="/usr/local/man:$MANPATH"
-
-export LANG=en_US.UTF-8
-
 export EDITOR="vim"
 
 [ -z $SSH_CONNECTION ] && export EDITOR="helix"
@@ -46,8 +30,8 @@ alias cd="z"
 alias sudo="doas"
 alias edit=$EDITOR
 
-eval "$(zoxide init zsh)"
+[ $( where zoxide | wc -l ) != 0 ] && eval "$(zoxide init zsh)"
+
+[ $( where pfetch | wc -l ) != 0 ] && pfetch
 
 eval "$(starship init zsh)"
-
-pfetch
