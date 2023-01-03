@@ -1,4 +1,4 @@
-[ $ZELLIJ != 0 ] && zellij && exit
+[ -z $ZELLIJ ] && [ $( where zellij | wc -l ) != 0 ] && zellij && exit
 
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 
