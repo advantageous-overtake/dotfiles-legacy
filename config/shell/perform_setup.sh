@@ -4,8 +4,9 @@ current_directory=$( dirname "$( pwd -L )/${0}" )
 
 declare -A SYMLINK_TARGETS=(
   [zshrc]=$HOME/.zshrc
-  [zprofile]=$HOME/.zprofile
   [zshenv]=$HOME/.zshenv
+  [zprofile]=$HOME/.zprofile
+  [zlogout]=$HOME/.zlogout
   [starship.toml]=$HOME/.config/starship.toml
 )
 

@@ -1,37 +1,43 @@
-CASE_SENSITIVE="true"
+declare -A ZSH_CONFIG=(
+  [CASE_SENSITIVE]=false
+  [HYPEN_INSENSITIVE]=true
+  [DISABLE_MAGIC_FUNCTIONS]=true
+  [DISABLE_LS_COLORS]=false
+  [DISABLE_AUTO_TITLE]=true
+  [ENABLE_CORRECTION]=true
+  [DISABLE_UNTRACKED_FILES_DIRTY]=true
+  [ZSH_DISABLE_COMPFIX]=true
+)
 
-HYPHEN_INSENSITIVE="true"
+if [ `find $HOME -maxdepth 2 -type f -name "oh-my-zsh.sh" | wc -l` != 0 ]; then
+  zstyle ':omz:update' mode auto
 
-zstyle ':omz:update' mode auto
+  zstyle ':omz:update' frequency 13
 
-zstyle ':omz:update' frequency 13
+  plugins=( git zoxide adb archlinux )
 
-DISABLE_MAGIC_FUNCTIONS="true"
+  for setting_key in "${(@k)ZSH_CONFIG}"; do
+    declare "${setting_key}"="${ZSH_CONFIG[${setting_key}]}"
+  done
 
-DISABLE_AUTO_TITLE="true"
+  source `find $HOME -maxdepth 2 -type f -name "oh-my-zsh.sh" | head -n1`
+fi
 
-ZSH_DISABLE_COMPFIX="true"
+declare -A COMMAND_ALIASES=(
+  [cat]="bat"
+  [ls]=`[ $( command -v lsd | wc -l ) != 0 ] && echo -n "lsd -1 -l --icon never --date relative" || echo -n "ls"`
+  [cd]="z"
+  [sudo]=`[ $( command -v doas | wc -l ) != 0 ] && echo -n "ARGV0=doas doas" || echo -n "sudo"`
+  [e]="$EDITOR"
+)
 
-plugins=(git)
+for alias_ident in "${(@k)COMMAND_ALIASES}"; do
+  alias "${alias_ident}"="${COMMAND_ALIASES[${alias_ident}]}"
+done
 
-# User configuration
+unset ZSH_CONFIG COMMAND_ALIASES 
 
-export EDITOR="vim"
+[ `command -v pfetch | wc -l` != 0 ] && pfetch
 
-[ -z $SSH_CONNECTION ] && export EDITOR="helix"
+[ `command -v starship | wc -l` != 0 ] && eval "$(starship init zsh)"
 
-export ARCHFLAGS="-arch x86_64"
-
-[ -f $HOME/.oh-my-zsh/oh-my-zsh.sh ] && source $HOME/.oh-my-zsh/oh-my-zsh.sh
-
-alias cat="bat"
-alias ls="lsd -1 -l --icon never --date relative"
-alias cd="z"
-alias sudo="doas"
-alias edit=$EDITOR
-
-[ $( where zoxide | wc -l ) != 0 ] && eval "$(zoxide init zsh)"
-
-[ $( where pfetch | wc -l ) != 0 ] && pfetch
-
-eval "$(starship init zsh)"
