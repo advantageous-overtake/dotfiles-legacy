@@ -1,4 +1,4 @@
-[ -e $HOME/.ssh-agent ] || eval `ssh-agent -a $HOME/.ssh-agent` > /dev/null 2>&1
+[ -e $HOME/.ssh-agent ] || eval `ssh-agent -a $HOME/.ssh-agent` 2&>1 > /dev/null
 
 if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
   exec xinit

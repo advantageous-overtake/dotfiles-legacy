@@ -25,7 +25,7 @@ fi
 
 # function declaration
 
-# use git mv when inside a git repository, if not, fallback to std. mv
+# use git mv when inside a git repository, if not, fallback to mv
 # note: `mv` and `git mv` have incompatible options
 function mv_smart_git() {
   # early return if git is not installed.

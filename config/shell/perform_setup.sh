@@ -12,8 +12,8 @@ declare -A SYMLINK_TARGETS=(
 
 for target in "${(@k)SYMLINK_TARGETS}"; do
   link="${SYMLINK_TARGETS[${target}]}"
-  target=$current_directory/$target
   mkdir -p $( dirname $link )
+  target=`realpath --relative-to=$( dirname $link ) $current_directory/$target`  
   [ `readlink $link | wc -l` = 0 ] || [ `readlink $link` != $target ] && ln -S "-old" -sbfv $target $link
 done
 

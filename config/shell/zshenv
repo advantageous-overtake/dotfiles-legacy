@@ -34,3 +34,5 @@ unique_candidates=$( echo -n "${PATH_CANDIDATES[@]}" | tr ":" " " | tr " " "\n" 
 export PATH="${unique_candidates:1:-1}"
 
 export "${(@k)DEFAULT_ENVIRONMENT}"
+
+unset PATH_CANDIDATES DEFAULT_ENVIRONMENT
