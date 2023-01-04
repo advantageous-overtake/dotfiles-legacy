@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/env zsh
 
 current_directory=$( dirname "$( pwd -L )/${0}" )
 
