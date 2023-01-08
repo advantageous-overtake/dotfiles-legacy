@@ -2,4 +2,4 @@
 
 xrandr --dpi 84
 
-${1:-i3} -c $HOME/.i3wm && clear
+i3 -c $HOME/.i3wm &> /dev/null && clear

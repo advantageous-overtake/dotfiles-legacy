@@ -1,2 +1,2 @@
 #!/bin/sh
-exec /usr/bin/X -nolisten tcp -nolisten local "$@" vt$XDG_VTNR 2> /dev/null
+exec /usr/bin/X -nolisten tcp -nolisten local "$@" vt$XDG_VTNR &> /dev/null
