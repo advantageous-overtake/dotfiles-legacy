@@ -10,6 +10,7 @@ done
 
 declare -A PATH_CANDIDATES=(
   [LOCAL_BINARIES]="$HOME/.local/bin"
+  [LOCAL_CARGO_BINARIES]="$HOME/.cargo/bin"
   [UTIL_BINARIES]="$HOME/util"
   [DEFAULT_PATH]=$PATH # include PATH segments added by /etc/profile
   [CURRENT_DIR]="."

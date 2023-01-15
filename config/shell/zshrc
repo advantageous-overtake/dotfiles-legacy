@@ -44,6 +44,7 @@ declare -A COMMAND_ALIASES=(
   [ls]=`[ $( command -v lsd | wc -l ) != 0 ] && echo -n "lsd -1 -l --icon never --date relative" || echo -n "ls"`
   [mv]="nocorrect mv_smart_git"
   [sudo]=`[ $( command -v doas | wc -l ) != 0 ] && echo -n "ARGV0=doas doas" || echo -n "sudo"`
+  [grep]="nocorrect grep"
   [e]="$EDITOR"
 )
 
