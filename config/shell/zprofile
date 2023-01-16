@@ -1,6 +1,5 @@
 # Different user sessions should share an unique ssh-agent.
 if [ -e $HOME/.ssh-agent ] && [ `ps -au$USER | grep ssh-agent | wc -l` != 0 ]; then
-  [ `ps -au$USER | grep ssh-agent | wc -l` != 0 ] && eval `cat /proc/$( ps -au$USER -eo pid,comm | grep ssh-agent | head -n1 | awk '{ print $1 }' )/environ | tr "\0" "\n" | grep --color=never -F "SSH_"`
   SSH_AUTH_SOCK=$HOME/.ssh-agent
   SSH_AGENT_PID=`ps -au$USER -eo pid,comm | grep ssh-agent | head -n1 | awk '{ print $1 }'`
   export SSH_AUTH_SOCK SSH_AGENT_PID
