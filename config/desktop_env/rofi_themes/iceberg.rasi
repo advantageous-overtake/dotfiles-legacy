@@ -9,7 +9,7 @@
     grey: #6b7089;
 
     width: 512;
-    font: "Iosevka Nerd Font 14";
+    font: "Iosevka Nerd Font 13";
 }
 
 element-text, element-icon, mode-switcher {

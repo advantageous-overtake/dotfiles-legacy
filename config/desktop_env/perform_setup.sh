@@ -9,6 +9,7 @@ declare -A SYMLINK_TARGETS=(
   [picom]=$HOME/.picom
   [rofi]=$HOME/.rofi
   [rofi_themes]=$HOME/.rofi_themes
+  [rkeep]=$HOME/.rkeep.conf
   [user-dirs.dirs]=$HOME/.config/user-dirs.dirs
 )
 

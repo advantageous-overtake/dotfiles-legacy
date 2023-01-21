@@ -1,11 +1,11 @@
 configuration {
-    modi: "run,drun,window";
-    icon-theme: "Oranchelo";
+    modi: "drun,ssh";
+    icon-theme: "Tela-nord-dark";
     show-icons: true;
     terminal: "alacritty";
     drun-display-format: "{icon} {name}";
     location: 0;
-    disable-history: false;
+    disable-history: true;
     hide-scrollbar: true;
     display-drun: "   Apps ";
     display-run: "   Run ";

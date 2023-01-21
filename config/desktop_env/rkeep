@@ -7,6 +7,6 @@ alive = 1800
 clipboard = 10
 
 [session.command]
-pass = ["rofi", "-dmenu", "-password", "-p", "Password", "-theme-str", 'entry { placeholder: ""; }']
-list = ["rofi", "-dmenu", "-columns", "1", "-no-auto-select", "-i", "-p", "{session.name}"]
+pass = ["rofi", "-config", "$HOME/.rofi", "-dmenu", "-password", "-p", "Password"]
+list = ["rofi", "-config", "$HOME/.rofi", "-dmenu", "-columns", "1", "-no-auto-select", "-i", "-p", "{session.name}"]
 
