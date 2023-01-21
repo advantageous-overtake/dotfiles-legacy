@@ -4,6 +4,9 @@ declare -A DEFAULT_ENVIRONMENT=(
   [EDITOR]=`[ -n $SSH_CONNECTION ] && echo "helix" || echo "vim"`
 )
 
+# Side-load XDG standard paths if possible:
+[ -e "$HOME/.config/user-dirs.dirs" ] && export `cat $HOME/.config/user-dirs.dirs | grep -E "XDG_" | tr "\n" " " | tr -d "\""`
+
 for key in "${(@k)DEFAULT_ENVIRONMENT}"; do
   declare ${key}=${DEFAULT_ENVIRONMENT[${key}]}
 done
