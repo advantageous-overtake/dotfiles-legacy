@@ -1,9 +1,11 @@
 # systemd doesn't setup environment variables for new sessions
-if [ -e $HOME/.ssh-agent ] && [ `ps -au$USER | grep ssh-agent | wc -l` != 0 ]; then
-  eval `systemctl --user show ssh-agent --property Environment`
+
+if [ `systemctl --user is-active ssh-agent` = "active" ]; then
+  eval `systemctl --user show ssh-agent --property Environment --value`
   SSH_AGENT_PID=`systemctl --user show ssh-agent --property MainPID --value`
-  export SSH_A{UTH_SOCK,GENT_PID}
 fi
+
+export SSH_A{UTH_SOCK,GENT_PID}
 
 # tty1 is allocated for X, further allocations correspond for a shell session.
 if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
