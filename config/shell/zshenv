@@ -1,12 +1,11 @@
 declare -A DEFAULT_ENVIRONMENT=(
   [ARCH]=`uname -m`
-  [RUSTFLAGS]=`[ $( command -v rustc | wc -l ) != 0 ] && echo -n "-C opt-level=3 -C target-cpu=native"`
   [MANPATH]=`[ $( command -v man | wc -l ) != 0 ] && man --path`
   [EDITOR]=`[ -n $SSH_CONNECTION ] && echo "helix" || echo "vim"`
 )
 
 # Side-load XDG standard paths if possible:
-[ -e "$HOME/.config/user-dirs.dirs" ] && eval "export `cat .config/user-dirs.dirs | grep -E XDG_ | tr '\n' ' '`"
+[ -e "$HOME/.config/user-dirs.dirs" ] && export `cat $HOME/.config/user-dirs.dirs | grep -E "XDG_" | tr "\n" " " | tr -d "\""`
 
 for key in "${(@k)DEFAULT_ENVIRONMENT}"; do
   declare ${key}=${DEFAULT_ENVIRONMENT[${key}]}
