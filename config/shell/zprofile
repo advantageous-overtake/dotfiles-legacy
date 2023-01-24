@@ -1,9 +1,10 @@
 if [ ! -z $TERMUX_VERSION ] && [ `pgrep gpg-agent | wc -l` = 0 ]; then
   eval `gpg-agent --daemon --enable-ssh-support`
-  return
 elif [ ! -z $TERMUX_VERSION ]; then
   export SSH_AUTH_SOCK=`gpgconf --list-dirs agent-ssh-socket`
 fi
+
+[ ! -z $TERMUX_VERSION ] && return
 
 # systemd doesn't setup environment variables for new sessions
 if [ `systemctl --user is-active ssh-agent` = "active" ]; then
