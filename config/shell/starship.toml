@@ -14,7 +14,6 @@ format = """$username\
             $cmd_duration\
             $line_break\
             $jobs\
-            $battery\
             $time\
             $status\
             $container\
@@ -60,10 +59,3 @@ symbol = ' '
 min_time = 1
 format = '\[[$duration]($style)\] '
 
-[[battery.display]]
-threshold = 10
-style = 'bold red'
-
-[[battery.display]]
-threshold = 30
-style = 'bold yellow'
