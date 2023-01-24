@@ -1,5 +1,10 @@
-# systemd doesn't setup environment variables for new sessions
+if [ ! -z $TERMUX_VERSION ]; then
+  gpg-agent > /dev/null
+  export SSH_AUTH_SOCK=`gpgconf --list-dirs agent-ssh-socket`
+  return
+fi
 
+# systemd doesn't setup environment variables for new sessions
 if [ `systemctl --user is-active ssh-agent` = "active" ]; then
   eval `systemctl --user show ssh-agent --property Environment --value`
   SSH_AGENT_PID=`systemctl --user show ssh-agent --property MainPID --value`
