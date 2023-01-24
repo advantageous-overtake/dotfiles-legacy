@@ -1,7 +1,7 @@
 declare -A DEFAULT_ENVIRONMENT=(
   [ARCH]=`uname -m`
   [RUSTFLAGS]=`[ $( command -v rustc | wc -l ) != 0 ] && echo -n "-C opt-level=3 -C target-cpu=native"`
-  [MANPATH]=`[ $( command -v man | wc -l ) != 0 ] && man --path`
+  [MANPATH]=`[ -z $TERMUX_VERSION ] && [ $( command -v man | wc -l ) != 0 ] && man --path`
   [EDITOR]=`[ -n $SSH_CONNECTION ] && echo "helix" || echo "vim"`
 )
 
