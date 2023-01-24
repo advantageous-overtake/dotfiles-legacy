@@ -1,8 +1,6 @@
-#!/bin/sh
+#!/bin/env zsh
 
-[ `echo -n $SHELL | grep 'zsh' | wc -l` = 0 ] && echo "[i] zsh must be used as an interpreter due to zsh-only syntax being in use." && return
-
-eval "$(tail -n +6 $0)" | column -t && return
+eval "$(tail -n +4 $0)" | column -t && return
 
 current_directory=$( dirname "$( pwd -L )/${0}" )
 
@@ -17,9 +15,16 @@ for target in "${(@k)SYMLINK_TARGETS}"; do
   [ `readlink $link | wc -l` = 0 ] || [ `readlink $link` != $target ] && ln -S "-old" -sbfv $target $link
 done
 
+# Skip specific parts for Termux
+SKIPPED_SCRIPT_DIRECTORIES=(desktop_env systemd)
+
 for setup_script in `find $( dirname $0 )/config -type f -name "perform_setup.sh" -executable`; do
-  echo ":: $setup_script"
-  [ -f $setup_script ] && . $setup_script
+  directory_name=`basename $( dirname $setup_script )`    
+  if [ -z ${TERMUX_VERSION+x} ]; then
+    [ -f $setup_script ] && . $setup_script
+  elif [ $SKIPPED_SCRIPT_DIRECTORIES[(I)$directory_name] = 0 ]; then
+    [ -f $setup_script ] && . $setup_script
+  fi
 done
 
 unset current_directory SYMLINK_TARGETS
