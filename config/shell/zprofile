@@ -1,6 +1,5 @@
 if [ ! -z $TERMUX_VERSION ]; then
-  gpg-agent 2> /dev/null
-  export SSH_AUTH_SOCK=`gpgconf --list-dirs agent-ssh-socket`
+  eval `gpg-agent --daemon --enable-ssh-support`
   return
 fi
 
