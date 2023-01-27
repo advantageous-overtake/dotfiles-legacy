@@ -30,7 +30,6 @@
 #     mod + s - Open Rofi on 'ssh' mode
 #     mod + return - Open your favourite terminal emulator
 #     mod + a - Open Ranger
-#	  mod + z - Open rkeep
 #   Media Control
 #     Media and brightness XFree86 keys for laptops are supposed to work out of the box.
 #     These deltas are configurable, check the 'Other Configuration' label.
@@ -48,7 +47,6 @@ exec --no-startup-id "picom --config $HOME/.picom --experimental-backends"
 exec --no-startup-id "xss-lock -l slock"
 exec --no-startup-id "polkit-dumb-agent"
 exec --no-startup-id "setxkbmap es"
-exec --no-startup-id "rkeepd -c <(cat $HOME/.rkeep.conf | translate_environment.lua)"
 # User Configuration
 set $primary_modifier Mod4
 
@@ -202,7 +200,6 @@ bindsym $primary_modifier+d exec --no-startup-id "rofi -config $HOME/.rofi -modi
 bindsym $primary_modifier+s exec "rofi -config $HOME/.rofi -modi ssh -show ssh"
 bindsym $primary_modifier+Return exec "$terminal"
 bindsym $primary_modifier+a exec "$terminal -e 'ranger'"
-bindsym $primary_modifier+z exec "rkeep -c <(cat $HOME/.rkeep.conf | translate_environment.lua) --session default"
 bindsym $primary_modifier+Shift+s exec --no-startup-id "~/util/take_screenshot.sh"
 # Bar Configuration
 
