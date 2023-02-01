@@ -30,6 +30,7 @@
 #     mod + s - Open Rofi on 'ssh' mode
 #     mod + return - Open your favourite terminal emulator
 #     mod + a - Open Ranger
+#     mod + z - Open passmenu
 #   Media Control
 #     Media and brightness XFree86 keys for laptops are supposed to work out of the box.
 #     These deltas are configurable, check the 'Other Configuration' label.
@@ -200,6 +201,7 @@ bindsym $primary_modifier+d exec --no-startup-id "rofi -config $HOME/.rofi -modi
 bindsym $primary_modifier+s exec "rofi -config $HOME/.rofi -modi ssh -show ssh"
 bindsym $primary_modifier+Return exec "$terminal"
 bindsym $primary_modifier+a exec "$terminal -e 'ranger'"
+bindsym $primary_modifier+z exec "passmenu"
 bindsym $primary_modifier+Shift+s exec --no-startup-id "~/util/take_screenshot.sh"
 # Bar Configuration
 

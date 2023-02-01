@@ -14,8 +14,8 @@ if [ `find $HOME -maxdepth 2 -type f -name "oh-my-zsh.sh" | wc -l` != 0 ]; then
 
   zstyle ':omz:update' frequency 13
 
-  plugins=( git zoxide adb archlinux )
-
+  [ -z "${TERMUX_VERSION+x}" ] && plugins=( git zoxide adb archlinux ) || plugins=( git zoxide )
+  
   for setting_key in "${(@k)ZSH_CONFIG}"; do
     declare "${setting_key}"="${ZSH_CONFIG[${setting_key}]}"
   done
@@ -38,6 +38,62 @@ function mv_smart_git() {
   fi
 }
 
+function connect_to_gateway() {
+  nmcli dev wifi connect $1 password $( pass wifi/$1 )
+}
+
+# `head -2 | tail -1  is for ignoring this exact line`
+tail_offset=$( echo "`cat $HOME/.zshrc | wc -l` - `cat $HOME/.zshrc | grep COMMAND_ALIASES -n | tr ":" " " | awk '{ print $1 }' | head -2 | tail -1` + 1" | bc )
+
+[ ! -z "${TERMUX_VERSION+x}" ] && source <( cat $HOME/.zshrc | tail "-${tail_offset}" ) && return
+
+# one-way function to derive a key which is both computationally and memory hard to crack
+# scrypt kdf params consume a few hundred mebibytes
+# takes a initial passphrase, a salt, and the final key length
+function derive_expensive_key() {
+  pwgen --symbols --secure -H <(node -e "console.log(require('crypto').scryptSync('$1', '$2', 1024, { cost: 2 ** 20, maxmem: 128 * 2 ** 21 * 8 }).toString())") $3 1
+}
+
+function gather_imei() {
+  adb wait-for-device && adb shell "service call iphonesubinfo 1 | toybox cut -d \"'\" -f2 | toybox grep -Eo '[0-9]' | toybox xargs | toybox sed 's/\ //g'"
+}
+
+function derive_android_passwd() {
+  derive_expensive_key `pass master_password` `gather_imei` `echo "$( gather_imei ) % 16 + 16" | bc`   
+}
+
+function derive_for_phone() {
+  [ ! -e $HOME/.password-store/phones/$1.gpg ] && echo "error: phone known as '$1' was not found in the database" && return
+  local pass_output=`pass phones/$1`
+  local phone_imei=`grep -E "imei: [0-9]+" <( echo $pass_output ) | grep -Eo "[0-9]+"`
+  derive_expensive_key `pass master_password` $phone_imei `echo "${phone_imei} % 16 + 16" | bc`   
+}
+
+# unlock an android phone using a master password
+function unlock_android_device() {
+  local device_key=`derive_android_passwd`
+
+  # proceed to unlock connected device
+
+  local screen_bounds=`adb shell wm size | grep -Eo "[0-9]+x[0-9]+" | tr "x" " "` 
+
+  local horizontal_size=`echo -ne $screen_bounds | awk '{ print $1 }'`
+  
+  local vertical_size=`echo -ne $screen_bounds | awk '{ print $2 }'`
+
+  # turn screen on if off
+  [ `adb shell "dumpsys input_method | grep mInteractive=true | wc -l"` = 0 ] && adb shell input keyevent 26
+
+  # enter password view
+  adb shell input touchscreen swipe $( echo "${horizontal_size} / 2" | bc ) $( printf "%i" "`echo "${vertical_size} * 0.95" | bc`" ) $( echo "${horizontal_size} / 2" | bc ) $( printf "%i" "`echo "${vertical_size} * 0.35" | bc`" ) 250
+
+  adb shell input text `printf "%q" "$device_key"`
+}
+
+function type_android_passwd() {
+  adb shell input text `printf "%q" "$( derive_android_passwd )"`
+}
+
 declare -A COMMAND_ALIASES=(
   [cd]="z"
   [cat]="bat"
@@ -55,7 +111,7 @@ done
 
 unset ZSH_CONFIG COMMAND_ALIASES 
 
-[ `command -v pfetch | wc -l` != 0 ] && pfetch
+[ `command -v pfetch neofetch | wc -l` != 0 ] && `command -v pfetch neofetch`
 
 [ `command -v starship | wc -l` != 0 ] && eval "$(starship init zsh)"
 
