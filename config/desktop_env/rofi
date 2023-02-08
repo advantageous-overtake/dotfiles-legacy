@@ -4,6 +4,7 @@ configuration {
     show-icons: true;
     terminal: "alacritty";
     drun-display-format: "{icon} {name}";
+    matching: "prefix";
     location: 0;
     disable-history: true;
     hide-scrollbar: true;
