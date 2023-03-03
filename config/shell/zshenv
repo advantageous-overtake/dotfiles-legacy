@@ -6,7 +6,7 @@ declare -A DEFAULT_ENVIRONMENT=(
 )
 
 # Side-load XDG standard paths if possible:
-[ -e "$HOME/.config/user-dirs.dirs" ] && export $( $HOME/util/translate_environment.lua < $HOME/.config/user-dirs.dirs | tr "\n" " " )
+[ -e "$HOME/.config/user-dirs.dirs" ] && export $( $HOME/util/translate_environment.lua < $HOME/.config/user-dirs.dirs | tr "\n" " " | tr -d "\"" )
 
 for key in "${(@k)DEFAULT_ENVIRONMENT}"; do
   declare ${key}=${DEFAULT_ENVIRONMENT[${key}]}

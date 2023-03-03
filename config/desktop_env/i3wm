@@ -197,8 +197,8 @@ mode "resize" {
 bindsym $primary_modifier+r mode "resize"
 
 # Application Keybinds
-bindsym $primary_modifier+d exec --no-startup-id "rofi -config $HOME/.rofi -modi drun -show drun"
-bindsym $primary_modifier+s exec "rofi -config $HOME/.rofi -modi ssh -show ssh"
+bindsym $primary_modifier+d exec "rofi -config $HOME/.rofi -show drun"
+bindsym $primary_modifier+s exec "rofi -config $HOME/.rofi -show ssh"
 bindsym $primary_modifier+Return exec "$terminal"
 bindsym $primary_modifier+a exec "$terminal -e 'ranger'"
 bindsym $primary_modifier+z exec "passmenu"
