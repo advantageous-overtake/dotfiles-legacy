@@ -1,10 +1,14 @@
 #!/bin/sh
-temp_file=$(mktemp -u --suffix=".png")
 
-flameshot gui -r > $temp_file
+tmp_filename="$( openssl rand -hex 4 ).png"
+tmp_path="/tmp/${tmp_filename}"
 
-target_filename=$( openssl rand -hex 4 )
+flameshot gui -r > "${tmp_path}" 2> /dev/null
 
-scp $temp_file wfrsk.dev:/srv/http/static/uploads/$target_filename.png
+if [ "$( wc -l < "${tmp_path}" )" != 0 ]; then
+  scp "${tmp_path}" "wfrsk.dev:/srv/http/static/uploads/${tmp_filename}"
+  
+  [ "$?" = 0 ] && echo "https://uploads.static.wfrsk.dev/${tmp_filename}" | xclip -selection clipboard
+fi
 
-echo https://uploads.static.wfrsk.dev/$target_filename | xclip -selection clipboard
+rm -f "${tmp_path}"
